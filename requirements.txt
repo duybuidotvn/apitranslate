@@ -59,6 +59,3 @@ requests-toolbelt==0.7.0
 sklearn-crfsuite==0.3.6
 tabulate==0.8.3
 tflearn==0.3.2
-
-torch==1.1.0
-torchvision==0.3.0
