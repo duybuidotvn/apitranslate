@@ -61,5 +61,5 @@ sklearn-crfsuite==0.3.6
 tabulate==0.8.3
 tflearn==0.3.2
 
-https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl
-torchvision==0.3.0
+http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
+torchvision==0.2.1
