@@ -25,7 +25,7 @@ SECRET_KEY = '(ybb%52f)geem$ueuzp$m#j)e73ar$-zp$!985=x(m&94t^wdf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['herokudjangoapp123.herokuapp.com','apitranslate.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['herokudjangoapp123.herokuapp.com','apitranslate.herokuapp.com','localhost','35.240.147.124']
 
 
 # Application definition
