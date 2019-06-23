@@ -30,20 +30,20 @@ encoder1.eval()
 attn_decoder1.load_state_dict(torch.load("nmt_model/%s_attn_decoder1.pth.tar"%TRANSLATION, map_location={'cuda:0': 'cpu'}))
 attn_decoder1.eval()
 
-class ApiTranslate:
-    @staticmethod
-    def translate(input_sentence=""):
-        output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
-        return ' '.join(output_words)
+# class ApiTranslate:
+#     @staticmethod
+#     def translate(input_sentence=""):
+#         output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
+#         return ' '.join(output_words)
 
-    @staticmethod
-    def init():
-        input_sentence = "i love you"
-        print("Input Sentence: ", input_sentence)
-        output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
-        print("Output Sentence:", ' '.join(output_words))
+#     @staticmethod
+#     def init():
+#         input_sentence = "i love you"
+#         print("Input Sentence: ", input_sentence)
+#         output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
+#         print("Output Sentence:", ' '.join(output_words))
          
 if __name__ == '__main__':
     input1 = "i love you"
     print("Input Sentence: ", input1)
-    print("Output Sentence:", ApiTranslate.translate(input1)) 
+    # print("Output Sentence:", ApiTranslate.translate(input1)) 
