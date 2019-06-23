@@ -1,0 +1,10 @@
+<form action="{% url 'home:search' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="cauHoi" class="form-control" placeholder="input" required>
+
+    {{traLoi}}
+
+    <div class="text-center">
+        <button type="submit">Dịch</button>
+    </div> 
+</form>
