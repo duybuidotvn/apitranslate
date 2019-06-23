@@ -5,15 +5,12 @@ from django.template import loader
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
-import requests  
-
-from django.views.decorators.csrf import csrf_exempt
-
-from core_translate.translate_vn import test
+import requests   
+from django.views.decorators.csrf import csrf_exempt  
 
 # Create your views here.
-
-
+ 
+ 
 def index(request):
     return render(request, "home/index.html", {"users": 1})
 
@@ -33,7 +30,7 @@ def search(request):
     
     param = {
         "cauHoi": fromLocation,
-        "traLoi": test(fromLocation), 
+        "traLoi": ApiTranslate.translate(fromLocation), 
     }
     # param = {
     #     "cauHoi": fromLocation,
@@ -138,3 +135,51 @@ def search(request):
 # class testGenericView(generic.DetailView):
 #     model = User
 #     template_name = 'home/detail.html'
+
+
+
+# deep learning begin
+# from __future__ import unicode_literals, print_function, division
+import torch
+
+from core_translate.Encoder import EncoderRNN
+from core_translate.AttnDecoder import AttnDecoderRNN
+from core_translate.ultis import prepareData, evaluate
+
+use_cuda = torch.cuda.is_available()
+
+MAX_LENGTH = 50
+
+TRANSLATION = "eng-vn"
+input_lang, output_lang, pairs = prepareData(TRANSLATION.split("-")[0],
+                                             TRANSLATION.split('-')[1])
+
+teacher_forcing_ratio = 0.5
+hidden_size = 256
+encoder1 = EncoderRNN(input_lang.n_words, hidden_size)
+attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words,
+                               1, dropout_p=0.1)
+if use_cuda:
+    encoder1 = encoder1.cuda()
+    attn_decoder1 = attn_decoder1.cuda()
+
+
+encoder1.load_state_dict(torch.load("core_translate/nmt_model/%s_encoder1.pth.tar"%TRANSLATION, map_location={'cuda:0': 'cpu'}))
+encoder1.eval()
+
+attn_decoder1.load_state_dict(torch.load("core_translate/nmt_model/%s_attn_decoder1.pth.tar"%TRANSLATION, map_location={'cuda:0': 'cpu'}))
+attn_decoder1.eval()
+
+class ApiTranslate:
+    @staticmethod
+    def translate(input_sentence=""):
+        output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
+        return ' '.join(output_words)
+
+    @staticmethod
+    def init():
+        input_sentence = "i love you"
+        print("Input Sentence: ", input_sentence)
+        output_words, attentions = evaluate(input_lang, output_lang, encoder1, attn_decoder1, input_sentence)
+        print("Output Sentence:", ' '.join(output_words))
+# deep learning end 

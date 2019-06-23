@@ -75,7 +75,7 @@ def readLangs(lang1, lang2, reverse=False):
     print("Loading Language...")
 
     # Read the file and split into lines
-    lines = open('data/%s-%s.txt' % (lang1, lang2), encoding='utf-8').\
+    lines = open('core_translate/data/%s-%s.txt' % (lang1, lang2), encoding='utf-8').\
         read().strip().split('\n')
 
     if DEBUG:
