@@ -24,20 +24,16 @@ def search(request):
         # Redisplay the question voting form.
         param = {
             "cauHoi": '',
-            "traLoi": 'phuong', 
+            "traLoi": '', 
         }
         return render(request, "home/chat.html", param)
     
+    # translate
     param = {
         "cauHoi": fromLocation,
-        "traLoi": ApiTranslate.translate(fromLocation), 
-    }
-    # param = {
-    #     "cauHoi": fromLocation,
-    #     "traLoi": ApiTranslate.reply(fromLocation), 
-    # }
-
-    print(fromLocation) 
+        "traLoi": ApiTranslate.translate(fromLocation)[:-5], 
+    } 
+ 
     return render(request, "home/chat.html", param)
 
 
